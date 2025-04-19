@@ -1,20 +1,8 @@
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
-import SiteCard from "@/components/site-management/SiteCard";
 import { Site } from "@/types/site";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import AddSiteDialog from "@/components/site-management/AddSiteDialog";
+import SitesGrid from "@/components/site-management/SitesGrid";
 
 // Sample data - in a real app, this would come from your backend
 const initialSites: Site[] = [
@@ -45,24 +33,18 @@ const initialSites: Site[] = [
 
 const SiteManagement = () => {
   const [sites, setSites] = useState<Site[]>(initialSites);
-  const [isAddSiteOpen, setIsAddSiteOpen] = useState(false);
-  const [newSiteName, setNewSiteName] = useState("");
   const [selectedSite, setSelectedSite] = useState<Site | null>(null);
 
-  const handleAddSite = () => {
-    if (!newSiteName) return;
-
+  const handleAddSite = (siteName: string) => {
     const newSite: Site = {
       id: `${sites.length + 1}`,
-      name: newSiteName,
+      name: siteName,
       status: 'pending',
       createdAt: new Date().toISOString().split('T')[0],
       lastUpdated: new Date().toISOString().split('T')[0],
     };
 
     setSites([...sites, newSite]);
-    setNewSiteName("");
-    setIsAddSiteOpen(false);
   };
 
   const handleDeleteSite = (siteId: string) => {
@@ -79,51 +61,13 @@ const SiteManagement = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold tracking-tight">Site Management</h1>
-        <Dialog open={isAddSiteOpen} onOpenChange={setIsAddSiteOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <PlusCircle className="mr-2 h-4 w-4" />
-              Create New Site
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create a New Site</DialogTitle>
-              <DialogDescription>
-                Give your new site a name to get started.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="space-y-2">
-                <Label htmlFor="siteName">Site Name</Label>
-                <Input
-                  id="siteName"
-                  placeholder="My Awesome Site"
-                  value={newSiteName}
-                  onChange={(e) => setNewSiteName(e.target.value)}
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsAddSiteOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={handleAddSite}>Create Site</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <AddSiteDialog onAddSite={handleAddSite} />
       </div>
-
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {sites.map((site) => (
-          <SiteCard
-            key={site.id}
-            site={site}
-            onManage={handleManageSite}
-            onDelete={handleDeleteSite}
-          />
-        ))}
-      </div>
+      <SitesGrid
+        sites={sites}
+        onManageSite={handleManageSite}
+        onDeleteSite={handleDeleteSite}
+      />
     </div>
   );
 };
