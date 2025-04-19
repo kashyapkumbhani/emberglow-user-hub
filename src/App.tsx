@@ -48,34 +48,22 @@ const App = () => (
           } />
           <Route path="/security" element={
             <DashboardLayout>
-              <div className="animate-fade-in space-y-6">
-                <h1 className="text-3xl font-bold tracking-tight">Security</h1>
-                <p>Security content will be displayed here.</p>
-              </div>
+              <Security />
             </DashboardLayout>
           } />
           <Route path="/support" element={
             <DashboardLayout>
-              <div className="animate-fade-in space-y-6">
-                <h1 className="text-3xl font-bold tracking-tight">Support</h1>
-                <p>Support content will be displayed here.</p>
-              </div>
+              <Support />
             </DashboardLayout>
           } />
           <Route path="/templates" element={
             <DashboardLayout>
-              <div className="animate-fade-in space-y-6">
-                <h1 className="text-3xl font-bold tracking-tight">Templates</h1>
-                <p>Templates content will be displayed here.</p>
-              </div>
+              <Templates />
             </DashboardLayout>
           } />
           <Route path="/billing" element={
             <DashboardLayout>
-              <div className="animate-fade-in space-y-6">
-                <h1 className="text-3xl font-bold tracking-tight">Billing</h1>
-                <p>Billing content will be displayed here.</p>
-              </div>
+              <Billing />
             </DashboardLayout>
           } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
