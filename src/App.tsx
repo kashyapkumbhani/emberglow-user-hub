@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -8,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import Overview from "./pages/dashboard/Overview";
 import SiteManagement from "./pages/dashboard/SiteManagement";
+import SiteDetails from "./pages/dashboard/SiteDetails";
 import DomainManagement from "./pages/dashboard/DomainManagement";
 import Analytics from "./pages/dashboard/Analytics";
 import AccountSettings from "./pages/dashboard/AccountSettings";
@@ -29,6 +31,11 @@ const App = () => (
           <Route path="/site-management" element={
             <DashboardLayout>
               <SiteManagement />
+            </DashboardLayout>
+          } />
+          <Route path="/site-details/:siteId" element={
+            <DashboardLayout>
+              <SiteDetails />
             </DashboardLayout>
           } />
           <Route path="/domain-management" element={

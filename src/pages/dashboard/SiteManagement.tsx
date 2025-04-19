@@ -1,8 +1,10 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Site } from "@/types/site";
 import AddSiteDialog from "@/components/site-management/AddSiteDialog";
 import SitesGrid from "@/components/site-management/SitesGrid";
+import { useToast } from "@/hooks/use-toast";
 
 // Sample data - in a real app, this would come from your backend
 const initialSites: Site[] = [
@@ -33,7 +35,8 @@ const initialSites: Site[] = [
 
 const SiteManagement = () => {
   const [sites, setSites] = useState<Site[]>(initialSites);
-  const [selectedSite, setSelectedSite] = useState<Site | null>(null);
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleAddSite = (siteName: string) => {
     const newSite: Site = {
@@ -45,16 +48,24 @@ const SiteManagement = () => {
     };
 
     setSites([...sites, newSite]);
+    toast({
+      title: "Site Created",
+      description: `"${siteName}" has been created successfully.`,
+    });
   };
 
   const handleDeleteSite = (siteId: string) => {
+    const siteToDelete = sites.find(site => site.id === siteId);
     setSites(sites.filter(site => site.id !== siteId));
+    
+    toast({
+      title: "Site Deleted",
+      description: siteToDelete ? `"${siteToDelete.name}" has been deleted.` : "Site has been deleted.",
+    });
   };
 
   const handleManageSite = (site: Site) => {
-    setSelectedSite(site);
-    // In a real app, this would navigate to the site's management page
-    // You could use React Router to navigate to `/site-management/${site.id}`
+    navigate(`/site-details/${site.id}`, { state: { site } });
   };
 
   return (
