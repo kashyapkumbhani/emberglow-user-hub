@@ -11,6 +11,10 @@ import SiteManagement from "./pages/dashboard/SiteManagement";
 import DomainManagement from "./pages/dashboard/DomainManagement";
 import Analytics from "./pages/dashboard/Analytics";
 import AccountSettings from "./pages/dashboard/AccountSettings";
+import Security from "./pages/dashboard/Security";
+import Support from "./pages/dashboard/Support";
+import Templates from "./pages/dashboard/Templates";
+import Billing from "./pages/dashboard/Billing";
 
 const queryClient = new QueryClient();
 
